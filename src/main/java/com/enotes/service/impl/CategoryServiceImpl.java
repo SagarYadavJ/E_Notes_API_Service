@@ -3,6 +3,7 @@ package com.enotes.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,4 +76,32 @@ public class CategoryServiceImpl implements CategoryService{
 		return categoryResponse;
 	}
 
+	@Override
+	public CategoryDTO getcategoryById(Integer id) 
+	{
+		
+		Optional<Category> categoryDTO = categoryRepository.findById(id);
+		
+		if(categoryDTO.isPresent())
+		{
+			Category category = categoryDTO.get();
+			return mapper.map(categoryDTO, CategoryDTO.class);
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Boolean deletetcategoryById(Integer id) 
+	{
+		Optional<Category> categoryDTO = categoryRepository.findById(id);
+		if(categoryDTO.isPresent())
+		{
+			Category category = categoryDTO.get();
+			category.setIsDeleted(true);
+			categoryRepository.save(category);
+			return true;
+	    }
+		return false;
+	}
 }
