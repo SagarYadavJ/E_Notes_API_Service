@@ -10,6 +10,8 @@ import com.enotes.entity.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
+	List<Category> findByIsActiveTrue();
+
 
 
 }
